@@ -29,7 +29,8 @@ function setup() {
   player = createSprite(100,340,20,50);
   player.addAnimation("Running",player_running);
   player.scale = 0.1;
-  
+ // player.debug=true;
+
   ground = createSprite(400,350,800,10);
   ground.x=ground.width/2;
   ground.visible=false;
@@ -61,24 +62,27 @@ function draw() {
       player.scale=player.scale+0.1;
     }
 
+    textSize(20);
+    stroke("white");
+    strokeWeight(2);
+    fill("white");
+    text("score: "+score,50,50);
+
   if(obstacleGroup.isTouching(player)){
     gameState=END
   }
-  else if(gameState===END){
+
+  if(gameState===END){
+    textSize(30);
+    stroke("white");
+    strokeWeight(5);
+    fill("black");
+    text("GAME OVER!!!",400,200)
     backgr.velocityX=0;
     player.visible=false;
     FoodGroup.destroyEach();
     obstacleGroup.destroyEach();
-    textSize(30);
-    fill(255);
-    text("GAME OVER!!!",300,220)
-
   }
-
-    textSize(20);
-    stroke("white");
-    strokeWeight(5);
-    text("score: "+score,50,50);
 
     spawnFood();
     spawnObstacle();
@@ -89,26 +93,30 @@ function draw() {
 
 function spawnFood(){
 
-  if(frameCount%80==0)
+  if(frameCount%80==0){
   var banana=createSprite(600,random(120,200),40,10);
   banana.addImage(bananaImg);
   banana.scale=0.05;
   banana.velocityX=-4;
 
-  banana.lifetime=300;
+  banana.lifetime=400;
   player.depth=banana.depth+1;
   FoodGroup.add(banana);
+ // banana.debug=true;
+}
 }
 
 function spawnObstacle(){
-  if(frameCount%95==0){
+  if(frameCount%200==0){
      var obstacle=createSprite(random(400,800),330,30,30);
      obstacle.addImage(obstacleImg);
-     obstacle.scale=1;
+     obstacle.scale=0.5;
      obstacle.velocityX=-4;
+     obstacle.setCollider("circle",0,0,150);
 
      obstacle.lifetime=300;
      player.depth=obstacle.depth+1;
      obstacleGroup.add(obstacle);
+     //obstacle.debug=true;
   }
 }
