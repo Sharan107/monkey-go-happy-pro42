@@ -62,12 +62,6 @@ function draw() {
       player.scale=player.scale+0.1;
     }
 
-    textSize(20);
-    stroke("white");
-    strokeWeight(2);
-    fill("white");
-    text("score: "+score,50,50);
-
   if(obstacleGroup.isTouching(player)){
     gameState=END
   }
@@ -88,7 +82,28 @@ function draw() {
     spawnObstacle();
   }
 
+  if(gameState===END){
+  textSize(30); 
+  background("black");
+  stroke("white"); 
+  strokeWeight(5); 
+  fill("black"); 
+  text("GAME OVER!!!",400,200); 
+  backgr.velocityX=0; 
+  backgr.destroy();
+  player.visible=false; 
+  FoodGroup.destroyEach(); 
+  obstacleGroup.destroyEach(); 
+}
+
   drawSprites();
+
+  textSize(20);
+  stroke("white");
+  strokeWeight(2);
+  fill("white");
+  text("score: "+score,50,50);
+
 }
 
 function spawnFood(){
